@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <script src="https://cdn.socket.io/socket.io-1.4.3.js"></script>
+    <script src="lib/ionic/js/ionic.bundle.js"></script> <!-- contains angular -->
+    <script src="cordova.js"></script>
+    <script src="js/app.js"></script>
+  </head>
+  <body ng-app="RevealRemote">
+
+    <ion-pane data-view="controls" class="hidden">
+      <ion-header-bar class="bar-stable">
+        <h1 class="title">RevealRemote</h1>
+      </ion-header-bar>
+      <div class="bottom" ng-controller="ControlsController">
+        <div class="button-bar">
+          <a class="button button-dark button-outline" ng-click="togglePause()">Pause</a>
+          <a class="button button-assertive button-outline" ng-click="toggleOverview()">Overview</a>
+        </div>
+        <div style="height: 5px;"></div> <!-- spacer -->
+        <div class="button-bar">
+          <a class="button icon-left ion-chevron-left button-positive">Previous</a>
+          <a class="button icon-right ion-chevron-right button-balanced">Next</a>
+        </div>
+        <div style="height: 10px;"></div> <!-- spacer -->
+        <div class="touchpad" on-swipe-left="onTouchpadSwipe('navigateLeft')" on-swipe-up="onTouchpadSwipe('navigateUp')" on-swipe-right="onTouchpadSwipe('navigateRight')" on-swipe-down="onTouchpadSwipe('navigateDown')">
+          Drag here!
+        </div>
+      </div>
+    </ion-pane>
+
+    <ion-pane data-view="sign-in">
+      <ion-header-bar class="bar-stable">
+        <h1 class="title">RevealRemote</h1>
+      </ion-header-bar>
+      <ion-content ng-controller="LoginController">
+        <div class="list">
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Nickname</span>
+            <input type="text" placeholder="Nickname" ng-model="nickname" pattern="^[a-zA-Z0-9]{1,20}$">
+          </label>
+          <label class="item item-input item-floating-label">
+            <span class="input-label">Magic string</span>
+            <input type="text" placeholder="Magic string" ng-model="magic" pattern="^[a-zA-Z0-9]{4,60}$">
+          </label>
+          <div class="padding">
+            <button class="button button-block button-positive" ng-click="onSignInClick()">Sign in</button>
+          </div>
+        </div>
+      </ion-content>
+    </ion-pane>
+  </body>
+</html>
