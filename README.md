@@ -13,46 +13,46 @@ A browser window can be controlled by one or more mobile devices running the app
 ### M to S
 Socket.IO namespace: "/presenter"
 
-| Event name | Fields          | Description                                                                                           |   |   |
-|------------|-----------------|-------------------------------------------------------------------------------------------------------|---|---|
-| control    | action          | "action" must be a property of the global Reveal object.                                              |   |   |
-| handshake  | magic, nickname | "nickname" is used in personal notification messages and when letting spectators know someone joined. |   |   |
-|            |                 |                                                                                                       |   |   |
+| Event name | Fields          | Description                                                                                           |
+|------------|-----------------|-------------------------------------------------------------------------------------------------------|
+| control    | action          | "action" must be a property of the global Reveal object.                                              |
+| handshake  | magic, nickname | "nickname" is used in personal notification messages and when letting spectators know someone joined. |
+|            |                 |                                                                                                       |
 
 ### S to M
 
-| Event name    | Fields               | Description                                                                                                                             |   |   |
-|---------------|----------------------|-----------------------------------------------------------------------------------------------------------------------------------------|---|---|
-| ok            |                      |                                                                                                                                         |   |   |
-| not ok        | errorType            | Handshake is rejected when a validation error occurs (i.e. "nickname" is already in use; "magic" is not according to validation regex). |   |   |
-| slide changed | progress, slideNotes |                                                                                                                                         |   |   |
+| Event name    | Fields               | Description                                                                                                                             |
+|---------------|----------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| ok            |                      |                                                                                                                                         |
+| not ok        | errorType            | Handshake is rejected when a validation error occurs (i.e. "nickname" is already in use; "magic" is not according to validation regex). |
+| slide changed | progress, slideNotes |                                                                                                                                         |
 
 ### B to S
 Socket.IO namespace: "/presentation"
 
-| Event name    | Fields               | Description |   |   |
-|---------------|----------------------|-------------|---|---|
-| handshake     | magic                |             |   |   |
-| slide changed | progress, slideNotes |             |   |   |
+| Event name    | Fields               | Description |
+|---------------|----------------------|-------------|
+| handshake     | magic                |             |
+| slide changed | progress, slideNotes |             |
 
 ### S to B
 
-| Event name   | Fields    | Description                                                                                         |   |   |
-|--------------|-----------|-----------------------------------------------------------------------------------------------------|---|---|
-| ok           | magic     | B is added to a room defined by its magic string.                                                   |   |   |
-| not ok       | errorType | Handshake is rejected when a browser window is already connected or,when a validation error occurs. |   |   |
-| control      | action    | "action" must be a property of the global Reveal object.                                            |   |   |
-| notification | message   | To be emitted when a mobile device joins or leaves.                                                 |   |   |
+| Event name   | Fields    | Description                                                                                         |
+|--------------|-----------|-----------------------------------------------------------------------------------------------------|
+| ok           | magic     | B is added to a room defined by its magic string.                                                   |
+| not ok       | errorType | Handshake is rejected when a browser window is already connected or,when a validation error occurs. |
+| control      | action    | "action" must be a property of the global Reveal object.                                            |
+| notification | message   | To be emitted when a mobile device joins or leaves.                                                 |
 
 ## Fields
 Validation will be applied on both client and server side.
 
-| Field name    | Type   | Regular expression     |   |   |
-|---------------|--------|------------------------|---|---|
-| action        | String | ^[a-zA-Z]{1,30}$       |   |   |
-| errorType     | String | ^validation|duplicate$ |   |   |
-| magic         | String | ^[a-zA-Z0-9]{4,60}$    |   |   |
-| message       | String | ^[a-zA-Z0-9]{1,40}$    |   |   |
-| nickname      | String | ^[a-zA-Z0-9]{1,20}$    |   |   |
-| progress      | Number |                        |   |   |
-| slide changed | String |                        |   |   |
+| Field name    | Type   | Regular expression          |
+|---------------|--------|-----------------------------|
+| action        | String | ^[a-zA-Z]{1,30}$            |
+| errorType     | String | ^validation&#124;duplicate$ |
+| magic         | String | ^[a-zA-Z0-9]{4,60}$         |
+| message       | String | ^[a-zA-Z0-9]{1,40}$         |
+| nickname      | String | ^[a-zA-Z0-9]{1,20}$         |
+| progress      | Number |                             |
+| slide changed | String |                             |
