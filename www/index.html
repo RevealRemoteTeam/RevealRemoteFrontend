@@ -30,16 +30,16 @@
           <div class="col"><h4>Slide notes</h4>{{slideNotes}}</div>
         </div>
         <div class="button-bar">
-          <a class="button button-dark button-outline" ng-click="togglePause()">Pause</a>
-          <a class="button button-assertive button-outline" ng-click="toggleOverview()">Overview</a>
+          <a class="button button-dark button-outline" ng-click="emitControl('togglePause')">Pause</a>
+          <a class="button button-assertive button-outline" ng-click="emitControl('toggleOverview')">Overview</a>
         </div>
         <div style="height: 5px;"></div> <!-- spacer -->
         <div class="button-bar">
-          <a class="button icon-left ion-chevron-left button-positive">Previous</a>
-          <a class="button icon-right ion-chevron-right button-balanced">Next</a>
+          <a class="button icon-left ion-chevron-left button-positive" ng-click="emitControl('prev')">Previous</a>
+          <a class="button icon-right ion-chevron-right button-balanced" ng-click="emitControl('next')">Next</a>
         </div>
         <div style="height: 10px;"></div> <!-- spacer -->
-        <div class="touchpad" on-swipe-left="onTouchpadSwipe('navigateLeft')" on-swipe-up="onTouchpadSwipe('navigateUp')" on-swipe-right="onTouchpadSwipe('navigateRight')" on-swipe-down="onTouchpadSwipe('navigateDown')">
+        <div class="touchpad" on-swipe-left="emitControl('navigateLeft')" on-swipe-up="emitControl('navigateUp')" on-swipe-right="emitControl('navigateRight')" on-swipe-down="emitControl('navigateDown')">
           Drag here!
         </div>
       </div>

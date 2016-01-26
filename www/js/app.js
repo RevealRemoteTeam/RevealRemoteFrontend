@@ -1,10 +1,6 @@
 angular.module('RevealRemote', ['ionic'])
 
 .controller('ControlsController', ['$scope', 'socket.io', function ($scope, socket) {
-	$scope.onTouchpadSwipe = _emitControl.bind(null);
-	$scope.toggleOverview = _emitControl.bind(null, 'toggleOverview');
-	$scope.togglePause = _emitControl.bind(null, 'togglePause');
-
 	socket.on('slide changed', function (data) {
 		$scope.$apply(function () {
 			$scope.progress = (Math.round(data.progress * 1000) / 10) + '%';
@@ -12,7 +8,7 @@ angular.module('RevealRemote', ['ionic'])
 		});
 	});
 
-	function _emitControl (action) {
+	$scope.emitControl = function (action) {
 		socket.emit('control', {
 			action: action
 		});
