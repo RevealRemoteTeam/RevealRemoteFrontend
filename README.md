@@ -17,7 +17,6 @@ Socket.IO namespace: "/presenter"
 |------------|-----------------|-------------------------------------------------------------------------------------------------------|
 | control    | action          | "action" must be a property of the global Reveal object.                                              |
 | handshake  | magic, nickname | "nickname" is used in personal notification messages and when letting spectators know someone joined. |
-|            |                 |                                                                                                       |
 
 ### S to M
 
@@ -40,7 +39,7 @@ Socket.IO namespace: "/presentation"
 | Event name   | Fields    | Description                                                                                         |
 |--------------|-----------|-----------------------------------------------------------------------------------------------------|
 | ok           | magic     | B is added to a room defined by its magic string.                                                   |
-| not ok       | errorType | Handshake is rejected when a browser window is already connected or,when a validation error occurs. |
+| not ok       | errorType | Handshake is rejected when a browser window is already connected or when a validation error occurs. |
 | control      | action    | "action" must be a property of the global Reveal object.                                            |
 | notification | message   | To be emitted when a mobile device joins or leaves.                                                 |
 
