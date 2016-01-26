@@ -24,3 +24,35 @@
 .hidden {
 	display: none;
 }
+
+.status-led {
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+	border-radius: 5px;
+}
+
+.status-led.good {
+	background-color: #78E37F;
+}
+
+.status-led.mediocre {
+	background-color: #DCE359;
+}
+
+.status-led.bad {
+	background-color: #E85656;
+}
+
+.status-led.connecting {
+	background-color: #DCE359;
+	animation: blinking-led 1s linear infinite;
+}
+
+.red > span {
+	color: red;
+}
+
+@keyframes blinking-led {  
+  50% { background-color: transparent; }
+}
