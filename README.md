@@ -50,8 +50,11 @@ Validation will be applied on both client and server side.
 |---------------|--------|-----------------------------|
 | action        | String | ^[a-zA-Z]{1,30}$            |
 | errorType     | String | ^validation&#124;duplicate$ |
-| magic         | String | ^[a-zA-Z0-9]{4,60}$         |
-| message       | String | ^[a-zA-Z0-9]{1,40}$         |
-| nickname      | String | ^[a-zA-Z0-9]{1,20}$         |
+| magic         | String | ^[a-zA-Z0-9 ]{4,60}$        |
+| message       | String | ^[a-zA-Z0-9 ]{1,40}$        |
+| nickname      | String | ^[a-zA-Z0-9 ]{1,20}$        |
 | progress      | Number |                             |
 | slide changed | String |                             |
+
+## Remarks
+When a browser window sends a "slide changed" event, the data associated with this event should be stored somewhere server side, so that when a new mobile device connects, a "slide changed" event with the latest "slide changed" data can be emitted to said device.
