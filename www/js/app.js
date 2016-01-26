@@ -43,7 +43,7 @@ angular.module('RevealRemote', ['ionic'])
 }])
 
 .factory('socket.io', ['ViewSelector', function(viewSelector) {
-	var socket = io.connect('poseidon.appisode.app.sailabove.io/presenter');
+	var socket = io.connect('http://poseidon.appisode.app.sailabove.io/presenter');
 	socket.on('ok', function () {
 		viewSelector.controls();
 	});
