@@ -21,7 +21,7 @@ Socket.IO namespace: "/presenter"
 ### S to M
 
 | Event name             | Fields                | Description                                                                                                                             |
-|------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+|------------------------|-----------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
 | ok                     |                       |                                                                                                                                         |
 | not ok                 | errorType             | Handshake is rejected when a validation error occurs (i.e. "nickname" is already in use; "magic" is not according to validation regex). |
 | slide changed          | progress, slideNotes  |                                                                                                                                         |
