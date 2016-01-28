@@ -24,9 +24,7 @@ Socket.IO namespace: "/presenter"
 |------------------------|-----------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
 | ok                     |                       |                                                                                                                                         |
 | not ok                 | errorType             | Handshake is rejected when a validation error occurs (i.e. "nickname" is already in use; "magic" is not according to validation regex). |
-| slide changed          | progress, slideNotes  |                                                                                                                                         |
-| state                  | presentationConnected | presentationConnected indicates whether a presentation with the same magic string is currently connected.                               |
-| presentation connected |                       | Occurs when a presentation with the same magic string as the mobile device connects.                                                    |
+| state                  | progress, slideNotes, presentationConnected | Emitted when the presentation sends the state event to the server, or when a presenter connects. In the latter case the values the presentation most recently emitted are used. |
 
 ### B to S
 Socket.IO namespace: "/presentation"
