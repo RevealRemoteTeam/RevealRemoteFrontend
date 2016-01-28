@@ -20,11 +20,13 @@ Socket.IO namespace: "/presenter"
 
 ### S to M
 
-| Event name    | Fields               | Description                                                                                                                             |
-|---------------|----------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| ok            |                      |                                                                                                                                         |
-| not ok        | errorType            | Handshake is rejected when a validation error occurs (i.e. "nickname" is already in use; "magic" is not according to validation regex). |
-| slide changed | progress, slideNotes |                                                                                                                                         |
+| Event name             | Fields                | Description                                                                                                                             |
+|------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| ok                     |                       |                                                                                                                                         |
+| not ok                 | errorType             | Handshake is rejected when a validation error occurs (i.e. "nickname" is already in use; "magic" is not according to validation regex). |
+| slide changed          | progress, slideNotes  |                                                                                                                                         |
+| state                  | presentationConnected | presentationConnected indicates whether a presentation with the same magic string is currently connected.                               |
+| presentation connected |                       | Occurs when a presentation with the same magic string as the mobile device connects.                                                    |
 
 ### B to S
 Socket.IO namespace: "/presentation"
@@ -54,7 +56,7 @@ Validation will be applied on both client and server side.
 | message       | String | ^[a-zA-Z0-9 ]{1,40}$        |
 | nickname      | String | ^[a-zA-Z0-9 ]{1,20}$        |
 | progress      | Number |                             |
-| slide changed | String |                             |
+| slideNotes    | String |                             |
 
 ## Remarks
-When a browser window sends a "slide changed" event, the data associated with this event should be stored somewhere server side, so that when a new mobile device connects, a "slide changed" event with the latest "slide changed" data can be emitted to said device.
+When a browser window sends a "slide changed" event, the data associated with this event should be stored somewhere server side, so that when a new mobile device connects, a "slide changed" event with the latest "slide changed" data can be emitted to said device. A "state" event should also be emitted when a mobile device connects.
