@@ -1,7 +1,7 @@
 angular.module('RevealRemote', ['ionic'])
 
 .controller('ControlsController', ['$scope', 'socket.io', function ($scope, socket) {
-	socket.on('slide changed', function (data) {
+	socket.on('state', function (data) {
 		$scope.$apply(function () {
 			$scope.progress = (Math.round(data.progress * 1000) / 10) + '%';
 			$scope.slideNotes = data.slideNotes;
