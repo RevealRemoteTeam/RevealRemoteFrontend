@@ -1,9 +1,27 @@
 angular.module('RevealRemote', ['ionic'])
 
 .controller('ControlsController', ['$scope', 'socket.io', function ($scope, socket) {
+	var gauge = new Gauge(document.getElementById('progress')).setOptions({
+		lines: 12,
+		angle: 0,
+		lineWidth: 0.27,
+		pointer: {
+			length: 0.9,
+			strokeWidth: 0.035,
+			color: '#000000'
+		},
+		limitMax: true,
+		colorStart: '#6FADCF',
+		colorStop: '#8FC0DA',
+		strokeColor: '#E0E0E0',
+		generateGradient: true
+	});
+	gauge.maxValue = 100;
+	gauge.set(0);
+
 	socket.on('slide changed', function (data) {
 		$scope.$apply(function () {
-			$scope.progress = (Math.round(data.progress * 1000) / 10) + '%';
+			gauge.set(data.progress * 100);
 			$scope.slideNotes = data.slideNotes;
 		});
 	});
@@ -39,7 +57,7 @@ angular.module('RevealRemote', ['ionic'])
 }])
 
 .factory('socket.io', ['ViewSelector', function(viewSelector) {
-	var socket = io.connect('http://poseidon.appisode.app.sailabove.io/presenter');
+	var socket = io.connect('http://poseidon2.appisode.app.sailabove.io/presenter');
 	socket.on('ok', function () {
 		viewSelector.controls();
 	});
