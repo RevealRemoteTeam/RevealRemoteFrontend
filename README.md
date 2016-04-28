@@ -57,4 +57,4 @@ Validation will be applied on both client and server side.
 | slideNotes    | String |                                           |
 
 ## Remarks
-When a browser window sends a "slide changed" event, the data associated with this event should be stored somewhere server side, so that when a new mobile device connects, a "slide changed" event with the latest "slide changed" data can be emitted to said device. A "state" event should also be emitted when a mobile device connects.
+When a browser window sends a "slide changed" event, the data associated with this event should be stored somewhere server side, so that when a new mobile device connects, a "state" event with the latest "slide changed" data can be emitted to said device.

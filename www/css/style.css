@@ -53,6 +53,12 @@
 	color: red;
 }
 
-@keyframes blinking-led {  
-  50% { background-color: transparent; }
+@keyframes blinking-led {
+	50% {
+		background-color: transparent;
+	}
+}
+
+.presentation-info div {
+	text-align: center;
 }
