@@ -38,30 +38,17 @@ angular.module('RevealRemote', ['ionic'])
 	}
 }])
 
-.factory('socket.io', ['ViewSelector', function(viewSelector) {
-	var socket = io.connect('http://poseidon.appisode.app.sailabove.io/presenter');
+.factory('socket.io', function($rootScope) {
+	var socket = io.connect('http://localhost:8234/presenter');
 	socket.on('ok', function () {
-		viewSelector.controls();
+		$rootScope.signedIn = true;
 	});
 	socket.on('not ok', function () {
 		// notification using toastr or smth
-		viewSelector.signIn();
+		$rootScope.signedIn = false;
 	});
 
 	return socket;
-}])
-
-.factory('ViewSelector', function () {
-	return {
-		signIn: function () {
-			document.querySelector('[data-view="sign-in"]').classList.remove('hidden');
-			document.querySelector('[data-view="controls"]').classList.add('hidden');
-		},
-		controls: function () {
-			document.querySelector('[data-view="controls"]').classList.remove('hidden');
-			document.querySelector('[data-view="sign-in"]').classList.add('hidden');
-		}
-	}
 })
 
 .run(function($ionicPlatform) {

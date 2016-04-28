@@ -32,7 +32,7 @@ Socket.IO namespace: "/presentation"
 | Event name    | Fields               | Description |
 |---------------|----------------------|-------------|
 | handshake     | magic                |             |
-| slide changed | progress, slideNotes |             |
+| state         | progress, slideNotes |             |
 
 ### S to B
 
@@ -46,15 +46,15 @@ Socket.IO namespace: "/presentation"
 ## Fields
 Validation will be applied on both client and server side.
 
-| Field name    | Type   | Regular expression          |
-|---------------|--------|-----------------------------|
-| action        | String | ^[a-zA-Z]{1,30}$            |
-| errorType     | String | ^validation&#124;duplicate$ |
-| magic         | String | ^[a-zA-Z0-9 ]{4,60}$        |
-| message       | String | ^[a-zA-Z0-9 ]{1,40}$        |
-| nickname      | String | ^[a-zA-Z0-9 ]{1,20}$        |
-| progress      | Number |                             |
-| slideNotes    | String |                             |
+| Field name    | Type   | Regular expression                        |
+|---------------|--------|-------------------------------------------|
+| action        | String | ^[a-zA-Z]{1,30}$                          |
+| errorType     | String | ^validation&#124;duplicate&#124;notfound$ |
+| magic         | String | ^[a-zA-Z0-9 ]{4,60}$                      |
+| message       | String | ^[a-zA-Z0-9 ]{1,40}$                      |
+| nickname      | String | ^[a-zA-Z0-9 ]{1,20}$                      |
+| progress      | Number |                                           |
+| slideNotes    | String |                                           |
 
 ## Remarks
 When a browser window sends a "slide changed" event, the data associated with this event should be stored somewhere server side, so that when a new mobile device connects, a "slide changed" event with the latest "slide changed" data can be emitted to said device. A "state" event should also be emitted when a mobile device connects.
