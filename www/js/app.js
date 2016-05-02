@@ -1,45 +1,79 @@
-angular.module('RevealRemote', ['ionic'])
+angular.module('RevealRemote', ['ionic', 'ngCordova'])
 
-.controller('ControlsController', ['$scope', 'socket.io', function ($scope, socket) {
-	socket.on('state', function (data) {
+.controller('ControlsController', function ($scope, rrSocket, rrGauge) {
+	rrSocket.on('state', function (data) {
 		$scope.$apply(function () {
-			$scope.progress = (Math.round(data.progress * 1000) / 10) + '%';
-			$scope.slideNotes = data.slideNotes;
+			//$scope.progress = (Math.round(data.progress * 1000) / 10) + '%';
+			rrGauge(Math.floor(data.progress * 100));
+			$scope.slideNotes = data.slideNotes ? data.slideNotes.trim().split("\n").join("<br>") : null;
 		});
 	});
 
 	$scope.emitControl = function (action) {
-		socket.emit('control', {
+		rrSocket.emit('control', {
 			action: action
 		});
 	};
-}])
+})
 
-.controller('LoginController', ['$scope', 'socket.io', function ($scope, socket) {
-	$scope.onSignInClick = function () {
-		socket.emit('handshake', {
-			nickname: $scope.nickname,
-			magic: $scope.magic
+.controller('LoginController', function ($scope, $cordovaBarcodeScanner, rrSocket) {
+	$scope.onPairClick = function () {
+		if (!window.cordova) {
+			rrSocket.emit('handshake', {
+				roomId: prompt('uuid')
+			});
+			return;
+		}
+
+		$cordovaBarcodeScanner.scan().then(function (result) {
+			rrSocket.emit('handshake', {
+				roomId: result.text
+			});
 		});
 	};
-}])
+})
 
-.controller('StatusLedController', ['$scope', 'socket.io', function ($scope, socket) {
-	$scope.statusLedClass = ({ closed: 'mediocre', opening: 'connecting', open: 'good' })[socket.io.readyState];
-	socket.on('reconnecting', _setClass.bind(null, 'connecting'));
-	socket.on('reconnect_failed', _setClass.bind(null, 'bad'));
-	socket.on('connect', _setClass.bind(null, 'good'));
-	socket.on('reconnect', _setClass.bind(null, 'good'));
+.controller('StatusLedController', function ($scope, rrSocket) {
+	$scope.statusLedClass = ({ closed: 'mediocre', opening: 'connecting', open: 'good' })[rrSocket.io.readyState];
+	rrSocket.on('reconnecting', _setClass.bind(null, 'connecting'));
+	rrSocket.on('reconnect_failed', _setClass.bind(null, 'bad'));
+	rrSocket.on('connect', _setClass.bind(null, 'good'));
+	rrSocket.on('reconnect', _setClass.bind(null, 'good'));
 
 	function _setClass (className) {
 		$scope.$apply(function () {
 			$scope.statusLedClass = className;
 		});
 	}
-}])
+})
 
-.factory('socket.io', function($rootScope) {
-	var socket = io.connect('http://localhost:8234/presenter');
+.factory('rrGauge', function () {
+	var opts = {
+		lines: 12, // The number of lines to draw
+		angle: 0.15, // The length of each line
+		lineWidth: 0.44, // The line thickness
+		pointer: {
+			length: 0.9, // The radius of the inner circle
+			strokeWidth: 0.035, // The rotation offset
+			color: '#000000' // Fill color
+		},
+		limitMax: 'false',   // If true, the pointer will not go past the end of the gauge
+		colorStart: '#6FADCF',   // Colors
+		colorStop: '#8FC0DA',    // just experiment with them
+		strokeColor: '#E0E0E0',   // to see which ones work best for you
+		generateGradient: true
+	};
+	var target = document.getElementById('progress');
+	var gauge = new Gauge(target).setOptions(opts);
+	gauge.maxValue = 100;
+
+	return function (value) {
+		gauge.set(value);
+	};
+})
+
+.factory('rrSocket', function($rootScope) {
+	var socket = io.connect('https://revealremotebackend-gcmkuvzivi.now.sh/presenter');
 	socket.on('ok', function () {
 		$rootScope.signedIn = true;
 	});
@@ -54,21 +88,12 @@ angular.module('RevealRemote', ['ionic'])
 .run(function($ionicPlatform) {
 	$ionicPlatform.ready(function() {
 		!screen.lockOrientation || screen.lockOrientation('portrait');
-
 		if(window.cordova && window.cordova.plugins.Keyboard) {
-			// Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-			// for form inputs)
 			cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-
-			// Don't remove this line unless you know what you are doing. It stops the viewport
-			// from snapping when text inputs are focused. Ionic handles this internally for
-			// a much nicer keyboard experience.
 			cordova.plugins.Keyboard.disableScroll(true);
 		}
 		if(window.StatusBar) {
 			StatusBar.styleDefault();
 		}
-
-
 	});
-})
+});

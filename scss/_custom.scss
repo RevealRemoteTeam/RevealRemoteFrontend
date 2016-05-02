@@ -1,9 +1,7 @@
-/* Empty. Add your own CSS if you like */
-
 .touchpad {
 	height: 200px;
-	line-height: 200px;
-	font-size: 30px;
+	padding-top: 25px;
+	font-size: 25px;
 	text-align: center;
 	color: white;
 	width: 100%;
@@ -12,6 +10,12 @@
 	background-color: gray;
 	border-radius: 20px;
 	user-select: none;
+}
+
+.icon-dpad {
+	height: 20px;
+	width: auto;
+	vertical-align: middle;
 }
 
 .bottom {
@@ -57,8 +61,4 @@
 	50% {
 		background-color: transparent;
 	}
-}
-
-.presentation-info div {
-	text-align: center;
 }

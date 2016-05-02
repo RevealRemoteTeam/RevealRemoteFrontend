@@ -5,13 +5,14 @@ var concat = require('gulp-concat');
 var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
+var uglify = require('gulp-uglify');
 var sh = require('shelljs');
 
 var paths = {
   sass: ['./scss/**/*.scss']
 };
 
-gulp.task('default', ['sass']);
+gulp.task('default', ['sass', 'minify']);
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
@@ -29,6 +30,13 @@ gulp.task('sass', function(done) {
 gulp.task('watch', function() {
   gulp.watch(paths.sass, ['sass']);
 });
+
+gulp.task('minify', function() {
+  gulp.src('node_modules/socket.io-client/socket.io.js')
+  	.pipe(uglify())
+  	.pipe(rename({ extname: '.min.js' }))
+  	.pipe(gulp.dest('www/lib'));
+})
 
 gulp.task('install', ['git-check'], function() {
   return bower.commands.install()

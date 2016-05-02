@@ -1,4 +1,8 @@
 {
   "name": "revealRemote",
-  "app_id": ""
+  "app_id": "",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ]
 }
